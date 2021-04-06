@@ -1,26 +1,9 @@
-const { Util, MessageEmbed } = require("discord.js");
-const ytdl = require("ytdl-core");
-const ytdlDiscord = require("discord-ytdl-core");
-const yts = require("yt-search");
-const fs = require("fs");
-const sendError = require("../util/error");
-const scdl = require("soundcloud-downloader").default;
-module.exports = {
-    info: {
-        name: "play",
-        description: "To play songs :D",
-        usage: "<YouTube_URL> | <song_name>",
-        aliases: ["p"],
-    },
 
-    run: async function (client, message, args) {
         let channel = message.member.voice.channel;
         if (!channel) return sendError("I'm sorry but you need to be in a voice channel to play music!", message.channel);
 
         const permissions = channel.permissionsFor(message.client.user);
-        if (!permissions.has("CONNECT")) return sendError("I cannot connect to your voice channel, make sure I have the proper permissions!", message.channel);
-        if (!permissions.has("SPEAK")) return sendError("I cannot speak in this voice channel, make sure I have the proper permissions!", message.channel);
-
+        cannot connect to your voice channel, make sure I have the proper 
         var searchString = args.join(" ");
         if (!searchString) return sendError("You didn't poivide want i want to play", message.channel);
         const url = args[0] ? args[0].replace(/<(.+)>/g, "$1") : "";
@@ -173,15 +156,4 @@ module.exports = {
             queue.textChannel.send(thing);
         };
 
-        try {
-            const connection = await channel.join();
-            queueConstruct.connection = connection;
-            play(queueConstruct.songs[0]);
-        } catch (error) {
-            console.error(`I could not join the voice channel: ${error}`);
-            message.client.queue.delete(message.guild.id);
-            await channel.leave();
-            return sendError(`I could not join the voice channel: ${error}`, message.channel);
-        }
-    },
-};
+        
